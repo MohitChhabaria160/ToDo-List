@@ -1,0 +1,91 @@
+{% extends 'partals/base.html' %}<br/>
+{%block title %} Home {% endblock%}<br/>
+{% block content %} 
+<head>
+	<title></title>
+	<style>
+		body
+		{
+			background-repeat:no-repeat;
+			background-attachment:fixed;
+			background-size:cover;
+			background-image:url({{url_for('static',filename='download.jpg')}})
+		}
+	</style>
+</head>
+<div class="container">
+	<div class="row">
+		<div class="col-md-12">
+			<div class="card shadow">
+				<div class="card-header"><Font face="Arial Black">Statistics</div>
+				<div class="card body">
+					<div class="row">
+						<div class="col-md-4">
+							<div class="card shadow">
+								<div class="card body">
+									<h6 class="text-center">Total</h6>
+									<p class="text-center">{{total_todo}}</p>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="card shadow">
+								<div class="card body">
+									<h6 class="text-center">Completed</h6>
+									<p class="text-center">{{completed_todo}}</p>
+								</div>
+							</div>
+						</div>
+					<div class="col-md-4">
+						<div class="card shadow">
+							<div class="card body">
+								<h6 class="text-center">Uncompleted</h6>
+								<p class="text-center">{{uncompleted_todo}}</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<center>
+		<div class="col-md-6"><div class="card shadow">
+			<div class="card-header"><Font face="Arial Black">ToDo Form</Font></div>
+			<div class="card-body">
+				<form action="/add" method="POST">
+					<label for="">Title</label>
+					<input
+						type="text"
+						name="title"
+						class="form-control"
+						placeholder="Enter todo here.."
+					/>
+					<input
+						type="submit"
+						value="Add"
+						class="btn btn-primary btn-sm mt-2"
+					/>
+				</form>
+			</div>
+		</div>
+		</center>
+	</div>
+	{%if total_todo==0%}
+	<marquee class="mt-3 display-5"behavier="" direction=""><Font face="Arial Black">No ToDo in Database...Create New ToDo in ToDo Form...</Font> </marquee>
+	{%endif%}<br/>
+	{%for todo in todo_list%}
+	<div class "border-start border-5 mt-3 shadow">
+		<div class="card body">
+			<h5>{{todo.id}} | {{todo.title}}</h5>
+			{% if todo.complete%}
+			<span class="badge bg-success">Completed</span>
+			{%else%}
+			<span class="badge bg-secondary">Uncompleted</span>
+			{%endif%}
+			<a class="btn btn-info btn-sm" href="/update/{{  todo.id  }}">Update</a>
+			<a class="btn btn-danger btn-sm" href="/delete/{{  todo.id  }}">Delete</a>
+		</div>
+	</div>
+	{% endfor %} 
+</div>
+
+{% endblock  %}
